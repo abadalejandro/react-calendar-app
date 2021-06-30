@@ -6,7 +6,8 @@ const Navbar = () => {
            </span>
 
            <button className="btn btn-outline-danger">
-               <span>Exit</span>
+               <i className="fas fa-sign-out-alt"></i>
+               <span> Exit</span>
            </button>
        </div>
     )
