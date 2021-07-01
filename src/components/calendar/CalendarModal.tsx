@@ -1,6 +1,7 @@
 // import ReactDOM from 'react-dom';
 // @ts-ignore
 import DateTimePicker from 'react-datetime-picker';
+import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import moment from 'moment';
 import { useState } from 'react';
@@ -39,9 +40,10 @@ const CalendarModal = () => {
 
     const [startDateState, setStartDateState] = useState(now.toDate());
     const [endDateState, setEndDateState] = useState(anotherHour.toDate());
+    const [validTitleState, setValidTitleState] = useState<boolean>(true);
     const [formValuesState, setFormValuesState] = useState<IForm>(initialState);
 
-    const { notes, title, start, end } = formValuesState;
+    const { notes, title } = formValuesState;
 
     const handleInputChange = ({ target }: any) => {
         setFormValuesState({
@@ -55,7 +57,6 @@ const CalendarModal = () => {
     }
 
     const handleStartDateChange = (e: any) => {
-        console.log(e);
         setStartDateState(e);
         setFormValuesState({
             ...formValuesState,
@@ -63,7 +64,6 @@ const CalendarModal = () => {
         });
     }
     const handleEndDateChange = (e: any) => {
-        console.log(e);
         setEndDateState(e);
         setFormValuesState({
             ...formValuesState,
@@ -71,19 +71,27 @@ const CalendarModal = () => {
         });
     }
 
-    const handleSubmitForm = (e:any) => {
+    const handleSubmitForm =  async(e:any) => {
         e.preventDefault();
-        const momentStart = moment(start);
-        const momentEnd = moment(end);
-
+        const momentStart = moment(startDateState);
+        const momentEnd = moment(endDateState);
+        
         if(momentStart.isSameOrAfter(momentEnd)){
-            console.log('End date must be greater');
-            return;
+            console.log('in');
+            return  await Swal.fire('Error', 'End date must be grater than Start date', 'error');
         }
 
-        console.log(formValuesState);
+        if(title.trim().length < 2){
+            return setValidTitleState(false);
+        }
+
+        // TODO save info in db
+        setValidTitleState(true);
+        closeModal();
+
     }
 
+ 
     return (
         <Modal
             isOpen={true}
@@ -99,8 +107,6 @@ const CalendarModal = () => {
             className="container"
             onSubmit={handleSubmitForm}
             >
-
-
                 <div className="form-group">
                     <label>Start date and time</label>
                     <DateTimePicker
@@ -123,13 +129,12 @@ const CalendarModal = () => {
                         amPmArialLabel="Select AM/PM"
                     />
                 </div>
-
                 <hr />
                 <div className="form-group">
                     <label>Title and Notes</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className={`form-control ${!validTitleState && 'is-invalid'}`}
                         placeholder="Título del evento"
                         name="title"
                         value={title}
