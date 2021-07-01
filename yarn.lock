@@ -1885,6 +1885,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-modal@^3.12.0":
+  "integrity" "sha512-UnHu/YO73NZLwqFpju/c0tqiswR0UHIfeO16rkfLVJUIMfQsl7X0CBm99H5XXgBMe/PgtQ/Rkud72iuRBr1TeA=="
+  "resolved" "https://registry.npmjs.org/@types/react-modal/-/react-modal-3.12.0.tgz"
+  "version" "3.12.0"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-router-dom@^5.1.7":
   "integrity" "sha512-D5mHD6TbdV/DNHYsnwBTv+y73ei+mMjrkGrla86HthE4/PVvL1J94Bu3qABU+COXzpL23T1EZapVVpwHuBXiUg=="
   "resolved" "https://registry.npmjs.org/@types/react-router-dom/-/react-router-dom-5.1.7.tgz"
