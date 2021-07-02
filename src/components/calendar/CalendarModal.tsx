@@ -4,7 +4,12 @@ import DateTimePicker from 'react-datetime-picker';
 import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import moment from 'moment';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { IRootReducer } from '../../redux/store';
+import { uiCloseModal } from '../../redux/actions/uiActions';
+import { eventAddNew, eventClearActiveEvent, eventUpdated } from '../../redux/actions/eventActions';
+import { IEvent } from '../../redux/reducers/calendarReducer';
 
 const customStyles = {
     content: {
@@ -22,28 +27,36 @@ Modal.setAppElement('#root');
 const now = moment().minutes(0).seconds(0).add(1, 'hours');
 const anotherHour = now.clone().add(1, 'hours');
 
-interface IForm {
-    title: string;
-    notes: string;
-    start: Date;
-    end: Date;
-}
-
-const initialState: IForm = {
-    title: 'Event',
+const initialState: IEvent = {
+    id: null,
+    title: '',
     notes: '',
     start: now.toDate(),
     end: anotherHour.toDate(),
 }
 
 const CalendarModal = () => {
+    const dispatch = useDispatch();
+    const { modalOpen } = useSelector((state: IRootReducer) => state.ui);
+    const { activeEvent } = useSelector((state: IRootReducer) => state.calendar);
 
     const [startDateState, setStartDateState] = useState(now.toDate());
     const [endDateState, setEndDateState] = useState(anotherHour.toDate());
     const [validTitleState, setValidTitleState] = useState<boolean>(true);
-    const [formValuesState, setFormValuesState] = useState<IForm>(initialState);
+    const [formValuesState, setFormValuesState] = useState<IEvent>(initialState);
 
     const { notes, title } = formValuesState;
+
+
+    useEffect(() => {
+        if (activeEvent) {
+            setFormValuesState(activeEvent);
+        }
+
+
+    }, [activeEvent, setFormValuesState]);
+
+
 
     const handleInputChange = ({ target }: any) => {
         setFormValuesState({
@@ -53,7 +66,9 @@ const CalendarModal = () => {
     }
 
     const closeModal = () => {
-        console.log('closing');
+        dispatch(uiCloseModal());
+        setFormValuesState(initialState);
+        dispatch(eventClearActiveEvent());
     }
 
     const handleStartDateChange = (e: any) => {
@@ -71,30 +86,42 @@ const CalendarModal = () => {
         });
     }
 
-    const handleSubmitForm =  async(e:any) => {
+    const handleSubmitForm = async (e: any) => {
         e.preventDefault();
         const momentStart = moment(startDateState);
         const momentEnd = moment(endDateState);
-        
-        if(momentStart.isSameOrAfter(momentEnd)){
+
+        if (momentStart.isSameOrAfter(momentEnd)) {
             console.log('in');
-            return  await Swal.fire('Error', 'End date must be grater than Start date', 'error');
+            return await Swal.fire('Error', 'End date must be grater than Start date', 'error');
         }
 
-        if(title.trim().length < 2){
+        if (title.trim().length < 2) {
             return setValidTitleState(false);
         }
 
+        if (activeEvent) {
+            dispatch(eventUpdated(formValuesState))
+        } else {
+            dispatch(eventAddNew({
+                ...formValuesState,
+                id: new Date().getTime(),
+                user: {
+                    _id: '123',
+                    name: 'Pindapoy'
+                }
+            }));
+        }
         // TODO save info in db
         setValidTitleState(true);
         closeModal();
 
     }
 
- 
+
     return (
         <Modal
-            isOpen={true}
+            isOpen={modalOpen}
             onRequestClose={closeModal}
             closeTimeoutMS={200}
             style={customStyles}
@@ -103,9 +130,9 @@ const CalendarModal = () => {
         >
             <h1> New event </h1>
             <hr />
-            <form 
-            className="container"
-            onSubmit={handleSubmitForm}
+            <form
+                className="container"
+                onSubmit={handleSubmitForm}
             >
                 <div className="form-group">
                     <label>Start date and time</label>

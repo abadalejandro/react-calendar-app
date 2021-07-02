@@ -18,6 +18,7 @@ export const uiReducer = (state: IUIReducer = initialState, action: IUIActions) 
 
     switch (action.type) {
         case types.uiOpenModal:
+            console.log('from reducer')
             return {
                 ...state,
                 modalOpen: true

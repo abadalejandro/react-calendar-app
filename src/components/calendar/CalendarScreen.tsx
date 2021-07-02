@@ -9,25 +9,22 @@ import CalendarEvent from './CalendarEvent';
 
 import 'moment/locale/es';
 import CalendarModal from './CalendarModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { uiOpenModal } from '../../redux/actions/uiActions';
+import { eventSetActiveEvent } from '../../redux/actions/eventActions';
+import { IEvent } from '../../redux/reducers/calendarReducer';
+import AddNewFab from '../ui/AddNewFab';
+import { IRootReducer } from '../../redux/store';
 moment.locale('es');
 
+
+
 const localizer = momentLocalizer(moment);
-const events = [{
-    title: 'Birthdate of cheff',
-    start: moment().toDate(),
-    end: moment().add(2, 'hour').toDate(),
-    bgcolor: '#fafafa',
-    allDay: false,
-    notes: 'Comprar la comida jaa fas lad falfajfasdfsfaf asfasf',
-    user: {
-        _id: '123',
-        name: 'Alejandro'
-    }
-}]
 
 const CalendarScreen = () => {
-
-    const [lastVieState, setLastVieState] = useState<any>(localStorage.getItem('lastView') || 'month' );
+    const dispatch = useDispatch();
+    const events = useSelector((state: IRootReducer) => state.calendar.events);
+    const [lastVieState, setLastVieState] = useState<any>(localStorage.getItem('lastView') || 'month');
 
     const style = {
         // backgroundColor: '#f7a336',
@@ -37,15 +34,14 @@ const CalendarScreen = () => {
         display: 'block',
         color: 'white'
 
-    }
+    };
 
     const onDoubleClick = (e: any) => {
-        console.log(e);
-        console.log('double click')
+        dispatch(uiOpenModal());
     }
-    const onSelectEvent = (e: any) => {
-        console.log(e);
-        console.log('selected')
+    
+    const onSelectEvent = (e: IEvent) => {
+        dispatch(eventSetActiveEvent(e));
     }
 
     const onViewChange = (e: any) => {
@@ -55,13 +51,11 @@ const CalendarScreen = () => {
     }
 
     const eventStyleGetter = (event: Object, start: any, end: any, isSelected: boolean) => {
-        // console.log(event)
         return {
             className: 'ale',
             style: style
         }
     }
-
 
 
     return (
@@ -83,18 +77,8 @@ const CalendarScreen = () => {
                 components={{
                     event: CalendarEvent
                 }}
-            // onSelectEvent={(event: Object, e: SyntheticEvent) => {
-            //     console.log({ event, e });
-            //     // return style;
-
-            //     console.log(e.currentTarget);
-            // }
-            // }
-
-            // eventPropGetter={eventStyleGetter}
-            // style={style}
             />
-
+            <AddNewFab />
             <CalendarModal />
         </div>
     )
