@@ -10,6 +10,7 @@ const AddNewFab = () => {
 
     const handleOnClick = (e: any) => {
         // dispatch(eventClearActiveEvent);
+        dispatch(eventClearActiveEvent());
         dispatch(uiOpenModal());
 
     }

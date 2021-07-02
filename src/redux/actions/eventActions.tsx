@@ -20,5 +20,9 @@ export const eventUpdated = (event:IEvent) => ({
     payload: {event}
 });
 
+export const eventDeleted = () => ({
+    type: types.eventDeleted
+});
+
 
 

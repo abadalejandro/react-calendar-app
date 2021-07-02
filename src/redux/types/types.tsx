@@ -8,6 +8,7 @@ interface ITypes {
     eventAddNew: string;
     eventClearActiveEvent: string;
     eventUpdated: string;
+    eventDeleted: string;
 }
 
 
@@ -18,4 +19,5 @@ export const types: ITypes = {
     eventAddNew: '[event] Add New Event',
     eventClearActiveEvent: '[event] Clear Active Event',
     eventUpdated: '[event] Event updated',
+    eventDeleted: '[event] Event deleted'
 }

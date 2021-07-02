@@ -111,4 +111,11 @@ html, body{
     right: 25px;
 }
 
+.fab-danger {
+    bottom: 25px;
+    padding: 25px;
+    position: fixed;
+    left: 25px;
+}
+
 

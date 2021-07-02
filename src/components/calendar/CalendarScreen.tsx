@@ -11,10 +11,11 @@ import 'moment/locale/es';
 import CalendarModal from './CalendarModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiOpenModal } from '../../redux/actions/uiActions';
-import { eventSetActiveEvent } from '../../redux/actions/eventActions';
+import { eventSetActiveEvent, eventClearActiveEvent } from '../../redux/actions/eventActions';
 import { IEvent } from '../../redux/reducers/calendarReducer';
 import AddNewFab from '../ui/AddNewFab';
 import { IRootReducer } from '../../redux/store';
+import DeleteFab from '../ui/DeleteEventFab';
 moment.locale('es');
 
 
@@ -23,7 +24,7 @@ const localizer = momentLocalizer(moment);
 
 const CalendarScreen = () => {
     const dispatch = useDispatch();
-    const events = useSelector((state: IRootReducer) => state.calendar.events);
+    const { events, activeEvent } = useSelector((state: IRootReducer) => state.calendar);
     const [lastVieState, setLastVieState] = useState<any>(localStorage.getItem('lastView') || 'month');
 
     const style = {
@@ -39,7 +40,7 @@ const CalendarScreen = () => {
     const onDoubleClick = (e: any) => {
         dispatch(uiOpenModal());
     }
-    
+
     const onSelectEvent = (e: IEvent) => {
         dispatch(eventSetActiveEvent(e));
     }
@@ -57,6 +58,10 @@ const CalendarScreen = () => {
         }
     }
 
+    const onSelectSlot = (e:any) => {
+        // console.log(e);
+        dispatch(eventClearActiveEvent());
+    }
 
     return (
         <div className="calendar-screen">
@@ -69,6 +74,8 @@ const CalendarScreen = () => {
                 popup={true}
                 view={lastVieState}
                 popupOffset={30}
+                onSelectSlot={onSelectSlot}
+                selectable={true}
                 eventPropGetter={eventStyleGetter}
                 messages={messages}
                 onDoubleClickEvent={onDoubleClick}
@@ -79,6 +86,9 @@ const CalendarScreen = () => {
                 }}
             />
             <AddNewFab />
+            {
+                (activeEvent) && <DeleteFab />
+            }
             <CalendarModal />
         </div>
     )
