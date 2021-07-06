@@ -1,36 +1,59 @@
 import React from 'react';
+import useForm from '../../hooks/useForm';
 import './login.css';
+
+interface ILogin {
+    loginEmail: string;
+    loginPassword: string;
+}
+
+const initialState:ILogin = {
+    loginEmail: 'ale@gmail.com',
+    loginPassword: '123456'
+     
+}
+
 
 const LoginScreen = () => {
 
-    
+    const [loginForm, handleLoginInputChange] = useForm<ILogin>(initialState);
 
 
+    const handleLogin = (e:any) => {
+        e.preventDefault();
+    }
+  
     return (
         <div className="container login-container">
             <div className="row">
                 <div className="col-md-6 login-form-1">
                     <h3>Ingreso</h3>
-                    <form>
+                    <form onSubmit={handleLogin} >
                         <div className="form-group">
-                            <input 
+                            <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Correo"
+                                placeholder="Email"
+                                name="loginEmail"
+                                value={loginForm.loginEmail}
+                                onChange={handleLoginInputChange}
                             />
                         </div>
                         <div className="form-group">
                             <input
                                 type="password"
                                 className="form-control"
-                                placeholder="Contraseña"
+                                placeholder="Password"
+                                name="loginPassword"
+                                value={loginForm.loginPassword}
+                                onChange={handleLoginInputChange}
                             />
                         </div>
                         <div className="form-group">
-                            <input 
+                            <input
                                 type="submit"
                                 className="btnSubmit"
-                                value="Login" 
+                                value="Login"                                                                
                             />
                         </div>
                     </form>
@@ -43,37 +66,37 @@ const LoginScreen = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Nombre"
+                                placeholder="Name"
                             />
                         </div>
                         <div className="form-group">
                             <input
                                 type="email"
                                 className="form-control"
-                                placeholder="Correo"
+                                placeholder="Email"
                             />
                         </div>
                         <div className="form-group">
                             <input
                                 type="password"
                                 className="form-control"
-                                placeholder="Contraseña" 
+                                placeholder="Password"
                             />
                         </div>
 
                         <div className="form-group">
                             <input
-                                type="password"
+                                type="repeatPassword"
                                 className="form-control"
-                                placeholder="Repita la contraseña" 
+                                placeholder="Repeat password"
                             />
                         </div>
 
                         <div className="form-group">
-                            <input 
-                                type="submit" 
-                                className="btnSubmit" 
-                                value="Crear cuenta" />
+                            <input
+                                type="submit"
+                                className="btnSubmit"
+                                value="Create account" />
                         </div>
                     </form>
                 </div>
