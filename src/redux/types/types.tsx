@@ -5,6 +5,7 @@ interface ITypes {
     uiOpenModal: string;
     uiCloseModal: string;
 
+    eventStartAddNew: string;
     eventSetActive: string;
     eventAddNew: string;
     eventClearActiveEvent: string;
@@ -24,6 +25,7 @@ export const types: ITypes = {
     uiOpenModal: '[ui] Open Modal',
     uiCloseModal: '[ui] Close Modal',
 
+    eventStartAddNew: '[event] Start Add New Event',
     eventSetActive: '[event] Set Active Event',
     eventAddNew: '[event] Add New Event',
     eventClearActiveEvent: '[event] Clear Active Event',
