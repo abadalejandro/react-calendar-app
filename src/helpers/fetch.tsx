@@ -13,7 +13,6 @@ export enum httpMethod {
 
 export const fetchWithoutToken = (endpoint: string, data: {}, method: httpMethod = httpMethod.GET) => {
     const url = `${baseUrl}/${endpoint}`;
-    console.log({url, endpoint, data, method});
 
     if (method === httpMethod.GET) {
         return fetch(url);
