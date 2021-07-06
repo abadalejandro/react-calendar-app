@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../redux/store';
 import { uiCloseModal } from '../../redux/actions/uiActions';
-import { eventAddNew, eventClearActiveEvent, eventUpdated } from '../../redux/actions/eventActions';
+import { eventStartAddNew, eventClearActiveEvent, eventUpdated } from '../../redux/actions/eventActions';
 import { IEvent } from '../../redux/reducers/calendarReducer';
 
 const customStyles = {
@@ -105,14 +105,7 @@ const CalendarModal = () => {
         if (activeEvent) {
             dispatch(eventUpdated(formValuesState))
         } else {
-            dispatch(eventAddNew({
-                ...formValuesState,
-                id: new Date().getTime(),
-                user: {
-                    _id: '123',
-                    name: 'Pindapoy'
-                }
-            }));
+            dispatch(eventStartAddNew(formValuesState));
         }
         // TODO save info in db
         setValidTitleState(true);
