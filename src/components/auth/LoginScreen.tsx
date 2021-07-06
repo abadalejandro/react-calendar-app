@@ -60,6 +60,7 @@ const LoginScreen = () => {
                         <div className="form-group">
                             <input
                                 type="text"
+                                autoComplete="false"
                                 className="form-control"
                                 placeholder="Email"
                                 name="loginEmail"
@@ -70,6 +71,7 @@ const LoginScreen = () => {
                         <div className="form-group">
                             <input
                                 type="password"
+                                autoComplete="false"
                                 className="form-control"
                                 placeholder="Password"
                                 name="loginPassword"
@@ -93,6 +95,7 @@ const LoginScreen = () => {
                         <div className="form-group">
                             <input
                                 type="text"
+                                autoComplete="false"
                                 className="form-control"
                                 placeholder="Name"
                                 onChange={handleRegisterInputChange}
@@ -103,6 +106,7 @@ const LoginScreen = () => {
                         <div className="form-group">
                             <input
                                 type="email"
+                                autoComplete="false"
                                 className="form-control"
                                 placeholder="Email"
                                 onChange={handleRegisterInputChange}
@@ -113,6 +117,7 @@ const LoginScreen = () => {
                         <div className="form-group">
                             <input
                                 type="password"
+                                autoComplete="false"
                                 className="form-control"
                                 placeholder="Password"
                                 onChange={handleRegisterInputChange}
@@ -124,6 +129,7 @@ const LoginScreen = () => {
                         <div className="form-group">
                             <input
                                 type="password"
+                                autoComplete="false"
                                 className="form-control"
                                 placeholder="Repeat password"
                                 onChange={handleRegisterInputChange}
