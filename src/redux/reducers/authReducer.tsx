@@ -26,6 +26,12 @@ export const authReducer = (state:IAuthReducer = initialState, action:IUIActions
             ...action.payload?.user,
             checking: false,
         }
+
+        case types.authCheckingFinish:
+            return {
+                ...state,
+                checking: false,
+            }
         
         default:
             return state;
