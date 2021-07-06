@@ -1,6 +1,7 @@
+import { types } from "../types/types";
 
 export interface IAuthReducer {
-    checking: boolean;
+    checking?: boolean;
     uid: string | null;
     name: string | null;
 }
@@ -14,12 +15,17 @@ const initialState = {
 
 interface IUIActions {
     type: string;
-    payload?: {}
+    payload: {user:IAuthReducer}
 }
 
 export const authReducer = (state:IAuthReducer = initialState, action:IUIActions ) => {
     switch (action.type) {
-       
+       case types.authLogin:
+        return {
+            ...state,
+            ...action.payload?.user,
+            checking: false,
+        }
         
         default:
             return state;

@@ -1,5 +1,7 @@
 import React from 'react';
 import useForm from '../../hooks/useForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { startLogin } from '../../redux/actions/authActions';
 import './login.css';
 
 interface ILogin {
@@ -7,22 +9,22 @@ interface ILogin {
     loginPassword: string;
 }
 
-const initialState:ILogin = {
+const initialState: ILogin = {
     loginEmail: 'ale@gmail.com',
     loginPassword: '123456'
-     
+
 }
 
 
 const LoginScreen = () => {
-
+    const dispatch = useDispatch();
     const [loginForm, handleLoginInputChange] = useForm<ILogin>(initialState);
-
-
-    const handleLogin = (e:any) => {
+    
+    const handleLogin = (e: any) => {
         e.preventDefault();
+        dispatch(startLogin(loginForm.loginEmail, loginForm.loginPassword))
     }
-  
+
     return (
         <div className="container login-container">
             <div className="row">
@@ -53,7 +55,7 @@ const LoginScreen = () => {
                             <input
                                 type="submit"
                                 className="btnSubmit"
-                                value="Login"                                                                
+                                value="Login"
                             />
                         </div>
                     </form>
