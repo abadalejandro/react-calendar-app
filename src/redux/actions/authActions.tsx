@@ -2,7 +2,6 @@ import { types } from "../types/types";
 import { fetchWithoutToken, httpMethod } from '../../helpers/fetch';
 import { IAuthReducer } from "../reducers/authReducer";
 import Swal from "sweetalert2";
-import { IRegister } from '../../components/auth/LoginScreen';
 
 export const startRegister = (email:string, password: string, name:string) => {
     return async (dispatch:any) => {
