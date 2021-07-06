@@ -11,7 +11,6 @@ interface ITypes {
     eventUpdated: string;
     eventDeleted: string;
     
-    authChecking: string;
     authCheckingFinish: string;
     authStartLogin: string;
     authLogin: string;
@@ -31,7 +30,6 @@ export const types: ITypes = {
     eventUpdated: '[event] Event updated',
     eventDeleted: '[event] Event deleted',
 
-    authChecking: '[auth] Checking login state',
     authCheckingFinish: '[auth] Finish checking login state',
     authStartLogin: '[auth] Start login',
     authLogin: '[auth] Login',
