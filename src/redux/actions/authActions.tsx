@@ -66,3 +66,14 @@ const login = (user: IAuthReducer) => ({
     type: types.authLogin,
     payload: { user }
 });
+
+
+export const startLogout = () => {
+    return (dispatch:any) => {
+        localStorage.clear();
+        dispatch(logout());
+    }
+}
+
+
+const logout = () => ({type: types.authLogout});

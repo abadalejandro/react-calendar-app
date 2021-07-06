@@ -15,24 +15,32 @@ const initialState = {
 
 interface IUIActions {
     type: string;
-    payload: {user:IAuthReducer}
+    payload: { user: IAuthReducer }
 }
 
-export const authReducer = (state:IAuthReducer = initialState, action:IUIActions ) => {
+export const authReducer = (state: IAuthReducer = initialState, action: IUIActions) => {
     switch (action.type) {
-       case types.authLogin:
-        return {
-            ...state,
-            ...action.payload?.user,
-            checking: false,
-        }
+        case types.authLogin:
+            return {
+                ...state,
+                ...action.payload?.user,
+                checking: false,
+            }
 
         case types.authCheckingFinish:
             return {
                 ...state,
                 checking: false,
             }
-        
+
+        case types.authLogout:
+            console.log('logout');
+            return {
+                checking: false,
+                uid: null,
+                name: null,
+            }
+
         default:
             return state;
     }
