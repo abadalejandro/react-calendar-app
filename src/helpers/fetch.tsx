@@ -28,7 +28,7 @@ export const fetchWithoutToken = (endpoint: string, data: {}, method: httpMethod
 
 }
 
-export const fetchWithToken = (endpoint: string, data?: {}, method: httpMethod = httpMethod.GET) => {
+export const fetchWithToken = (endpoint: string, data: {} = {}, method: httpMethod = httpMethod.GET) => {
     const url = `${baseUrl}/${endpoint}`;
     const token = localStorage.getItem('token') || '';
 
