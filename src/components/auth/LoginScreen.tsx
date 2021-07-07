@@ -24,10 +24,10 @@ export interface IRegister {
 }
 
 const initialRegisterState: IRegister = {
-    registerName: 'Nicola',
-    registerEmail: 'nicola@gmail.com',
-    registerPassword: '123456',
-    registerRepeatPassword: '123456',
+    registerName: '',
+    registerEmail: '',
+    registerPassword: '',
+    registerRepeatPassword: '',
 }
 
 
