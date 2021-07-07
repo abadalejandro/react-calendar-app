@@ -2,6 +2,7 @@ import { types } from "../types/types";
 import { fetchWithoutToken, fetchWithToken, httpMethod } from '../../helpers/fetch';
 import { IAuthReducer } from "../reducers/authReducer";
 import Swal from "sweetalert2";
+import { eventLogout } from './eventActions';
 
 
 export const startChecking = () => {
@@ -71,6 +72,7 @@ const login = (user: IAuthReducer) => ({
 export const startLogout = () => {
     return (dispatch:any) => {
         localStorage.clear();
+        dispatch(eventLogout());
         dispatch(logout());
     }
 }

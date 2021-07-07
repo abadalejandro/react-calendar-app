@@ -34,7 +34,6 @@ export const authReducer = (state: IAuthReducer = initialState, action: IUIActio
             }
 
         case types.authLogout:
-            console.log('logout');
             return {
                 checking: false,
                 uid: null,

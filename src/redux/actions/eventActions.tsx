@@ -114,5 +114,9 @@ const eventLoaded = (events: IEvent[]) => ({
     payload: events
 });
 
+export const eventLogout = () => ({
+   type: types.eventLogout
+});
+
 
 
