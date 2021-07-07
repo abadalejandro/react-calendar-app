@@ -94,7 +94,6 @@ const CalendarModal = () => {
         const momentEnd = moment(endDateState);
 
         if (momentStart.isSameOrAfter(momentEnd)) {
-            console.log('in');
             return await Swal.fire('Error', 'End date must be grater than Start date', 'error');
         }
 

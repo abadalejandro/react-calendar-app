@@ -25,22 +25,14 @@ const localizer = momentLocalizer(moment);
 const CalendarScreen = () => {
     const dispatch = useDispatch();
     const { events, activeEvent } = useSelector((state: IRootReducer) => state.calendar);
+    const { uid } = useSelector((state:IRootReducer) => state.auth);
     const [lastVieState, setLastVieState] = useState<any>(localStorage.getItem('lastView') || 'month');
     useEffect(() => {
         dispatch(eventStartLoading());
         
     }, [dispatch]);
 
-    const style = {
-        // backgroundColor: '#f7a336',
-        backgroundColor: '#367cf7',
-        borderRadius: '0px',
-        opacity: .8,
-        display: 'block',
-        color: 'white'
-
-    };
-
+   
     const onDoubleClick = (e: any) => {
         dispatch(uiOpenModal());
     }
@@ -50,12 +42,23 @@ const CalendarScreen = () => {
     }
 
     const onViewChange = (e: any) => {
-        // console.log('onViewChange', e)
         setLastVieState(e);
         localStorage.setItem('lastView', e);
     }
 
-    const eventStyleGetter = (event: Object, start: any, end: any, isSelected: boolean) => {
+   
+
+    const eventStyleGetter = (event: IEvent, start: any, end: any, isSelected: boolean) => {
+
+        const style = {
+            // backgroundColor:  '#f7a336',
+            backgroundColor: (uid === event.user?._id) ? '#367cf7' : '#465660',
+            borderRadius: '0px',
+            opacity: .8,
+            display: 'block',
+            color: 'white'
+    
+        };
         return {
             className: 'ale',
             style: style
@@ -63,7 +66,6 @@ const CalendarScreen = () => {
     }
 
     const onSelectSlot = (e:any) => {
-        // console.log(e);
         dispatch(eventClearActiveEvent());
     }
 
