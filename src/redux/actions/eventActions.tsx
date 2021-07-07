@@ -1,9 +1,11 @@
+import { Dispatch } from "redux";
 import { types } from "../types/types";
 import { IEvent } from "../reducers/calendarReducer";
 import { fetchWithToken, httpMethod } from '../../helpers/fetch';
+import { prepareEvents } from "../../helpers/prepareEvents";
 
 export const eventStartAddNew = (event: any) => {
-    return async (dispatch: any, getState: any) => {
+    return async (dispatch: Dispatch, getState: any) => {
         const { uid, name } = getState().auth;
 
         try {
@@ -16,7 +18,7 @@ export const eventStartAddNew = (event: any) => {
                     _id: uid,
                     name: name,
                 }
-                console.log({event});
+                console.log({ event });
                 dispatch(eventAddNew(event));
             }
 
@@ -52,6 +54,26 @@ export const eventUpdated = (event: IEvent) => ({
 
 export const eventDeleted = () => ({
     type: types.eventDeleted
+});
+
+export const eventStartLoading = () => {
+    return async (dispatch: Dispatch ) => {
+        try {
+            const resp = await fetchWithToken('events');
+            const body = await resp.json();
+            const events = prepareEvents(body.events);
+            dispatch(eventLoaded(events));
+
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
+}
+
+const eventLoaded = (events: IEvent[]) => ({
+    type: types.eventLoaded,
+    payload: events
 });
 
 

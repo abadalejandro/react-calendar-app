@@ -40,8 +40,9 @@ const initialState: ICalendarReducer = {
 
 interface IUIActions {
     type: string;
-    payload?: { event: IEvent }
+    payload?: { event:  any } 
 }
+
 
 
 export const calendarReducer = (state: ICalendarReducer = initialState, action: IUIActions) => {
@@ -75,6 +76,13 @@ export const calendarReducer = (state: ICalendarReducer = initialState, action: 
                 ...state,
                 events: state.events.filter(event => event.id !== state.activeEvent?.id),
                 activeEvent: null,
+            }
+
+
+        case types.eventLoaded:
+            return {
+                ...state,
+                events: action.payload
             }
 
         default:

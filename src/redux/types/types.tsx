@@ -11,6 +11,7 @@ interface ITypes {
     eventClearActiveEvent: string;
     eventUpdated: string;
     eventDeleted: string;
+    eventLoaded: string;
     
     authCheckingFinish: string;
     authStartLogin: string;
@@ -31,6 +32,7 @@ export const types: ITypes = {
     eventClearActiveEvent: '[event] Clear Active Event',
     eventUpdated: '[event] Event updated',
     eventDeleted: '[event] Event deleted',
+    eventLoaded: '[event] Event Loaded',
 
     authCheckingFinish: '[auth] Finish checking login state',
     authStartLogin: '[auth] Start login',

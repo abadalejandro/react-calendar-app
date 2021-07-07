@@ -2,7 +2,7 @@ import moment from 'moment';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from '../ui/Navbar';
 import { messages } from '../../helpers/calendar-messages-es';
 import CalendarEvent from './CalendarEvent';
@@ -11,7 +11,7 @@ import 'moment/locale/es';
 import CalendarModal from './CalendarModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { uiOpenModal } from '../../redux/actions/uiActions';
-import { eventSetActiveEvent, eventClearActiveEvent } from '../../redux/actions/eventActions';
+import { eventSetActiveEvent, eventClearActiveEvent, eventStartLoading } from '../../redux/actions/eventActions';
 import { IEvent } from '../../redux/reducers/calendarReducer';
 import AddNewFab from '../ui/AddNewFab';
 import { IRootReducer } from '../../redux/store';
@@ -26,6 +26,10 @@ const CalendarScreen = () => {
     const dispatch = useDispatch();
     const { events, activeEvent } = useSelector((state: IRootReducer) => state.calendar);
     const [lastVieState, setLastVieState] = useState<any>(localStorage.getItem('lastView') || 'month');
+    useEffect(() => {
+        dispatch(eventStartLoading());
+        
+    }, [dispatch]);
 
     const style = {
         // backgroundColor: '#f7a336',
