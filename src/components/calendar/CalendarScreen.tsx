@@ -50,8 +50,7 @@ const CalendarScreen = () => {
 
     const eventStyleGetter = (event: IEvent, start: any, end: any, isSelected: boolean) => {
 
-        const style = {
-            // backgroundColor:  '#f7a336',
+        const style = {           
             backgroundColor: (uid === event.user?._id) ? '#367cf7' : '#465660',
             borderRadius: '0px',
             opacity: .8,

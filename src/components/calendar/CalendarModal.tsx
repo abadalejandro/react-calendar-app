@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootReducer } from '../../redux/store';
 import { uiCloseModal } from '../../redux/actions/uiActions';
-import { eventStartAddNew, eventClearActiveEvent, eventUpdated } from '../../redux/actions/eventActions';
+import { eventStartAddNew, eventClearActiveEvent, eventStartUpdate } from '../../redux/actions/eventActions';
 import { IEvent } from '../../redux/reducers/calendarReducer';
 
 const customStyles = {
@@ -35,7 +35,7 @@ const initialState: IEvent = {
     end: anotherHour.toDate(),
 }
 
-const CalendarModal = () => {
+const CalendarModal = () => {    
     const dispatch = useDispatch();
     const { modalOpen } = useSelector((state: IRootReducer) => state.ui);
     const { activeEvent } = useSelector((state: IRootReducer) => state.calendar);
@@ -45,7 +45,7 @@ const CalendarModal = () => {
     const [validTitleState, setValidTitleState] = useState<boolean>(true);
     const [formValuesState, setFormValuesState] = useState<IEvent>(initialState);
 
-    const { notes, title } = formValuesState;
+    const { notes, title, start, end } = formValuesState;
 
 
     useEffect(() => {
@@ -102,7 +102,7 @@ const CalendarModal = () => {
         }
 
         if (activeEvent) {
-            dispatch(eventUpdated(formValuesState))
+            dispatch(eventStartUpdate(formValuesState))
         } else {
             dispatch(eventStartAddNew(formValuesState));
         }
@@ -132,7 +132,7 @@ const CalendarModal = () => {
                     <label>Start date and time</label>
                     <DateTimePicker
                         onChange={handleStartDateChange}
-                        value={startDateState}
+                        value={start}
                         className="form-control"
                         format="y-MM-dd hh:mm a"
                         amPmArialLabel="Select AM/PM"
@@ -143,8 +143,8 @@ const CalendarModal = () => {
                     <label>End date and time</label>
                     <DateTimePicker
                         onChange={handleEndDateChange}
-                        value={endDateState}
-                        minDate={startDateState}
+                        value={end}
+                        minDate={start}
                         className="form-control"
                         format="y-MM-dd hh:mm a"
                         amPmArialLabel="Select AM/PM"

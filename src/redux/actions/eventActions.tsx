@@ -3,6 +3,7 @@ import { types } from "../types/types";
 import { IEvent } from "../reducers/calendarReducer";
 import { fetchWithToken, httpMethod } from '../../helpers/fetch';
 import { prepareEvents } from "../../helpers/prepareEvents";
+import Swal from "sweetalert2";
 
 export const eventStartAddNew = (event: any) => {
     return async (dispatch: Dispatch, getState: any) => {
@@ -46,7 +47,25 @@ export const eventClearActiveEvent = () => ({
     type: types.eventClearActiveEvent
 });
 
-export const eventUpdated = (event: IEvent) => ({
+
+
+export const eventStartUpdate = (event: IEvent) => {
+    return async (dispatch: Dispatch) => {
+        try {
+            const resp = await fetchWithToken(`events/${event.id}`, event, httpMethod.PUT);
+            const body = await  resp.json();
+            if(body.ok){
+                dispatch(eventUpdated(event));
+            }else{
+                Swal.fire('Error', body.msg, 'error');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+const eventUpdated = (event: IEvent) => ({
     type: types.eventUpdated,
     payload: { event }
 });
@@ -56,7 +75,7 @@ export const eventDeleted = () => ({
 });
 
 export const eventStartLoading = () => {
-    return async (dispatch: Dispatch ) => {
+    return async (dispatch: Dispatch) => {
         try {
             const resp = await fetchWithToken('events');
             const body = await resp.json();
@@ -65,7 +84,7 @@ export const eventStartLoading = () => {
 
         } catch (error) {
             console.log(error);
-            
+
         }
     }
 }
